@@ -11,7 +11,7 @@ async function createBundle() {
   files.forEach(file => {
     if (file.isFile() && path.extname(path.join(stylesPath, file.name)) === '.css') {
       const input = fs.createReadStream(path.join(stylesPath, file.name), 'utf8');
-      input.pipe(output);
+      input.on('data', data => output.write(data + '\n'));
     }
   })
 }
